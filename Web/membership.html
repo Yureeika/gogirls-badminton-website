@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Membership — GoGirls Badminton</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+	  <a href="index.html" class="logo">
+		  <img src="logo.png" alt="Gogirls logo">
+	  <p class="tagline">Become a member</p></div>
+      <button aria-expanded="false" aria-controls="main-nav" class="nav-toggle" id="navToggle">☰</button>
+      <nav id="main-nav" class="main-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="programs.html">Programs</a></li><li><a href="events.html">Events</a></li><li><a href="team.html">Team</a></li><li><a href="membership.html">Membership</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li><li><a href="coaches.html">Coaches</a></li><li><a href="resources.html">Resources</a></li><li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <h2>Membership Plans</h2>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Casual Member</h3>
+        <p>Access to open play & weekly clinics</p>
+        <p><strong>$10 / month</strong></p>
+        <p><a class="btn" href="join.html">Sign Up</a></p>
+      </div>
+      <div class="card">
+        <h3>Training Member</h3>
+        <p>Includes structured training & discounts on tournaments</p>
+        <p><strong>$25 / month</strong></p>
+        <p><a class="btn primary" href="join.html">Sign Up</a></p>
+      </div>
+      <div class="card">
+        <h3>Competitive Squad</h3>
+        <p>Selection-based; includes travel & coaching</p>
+        <p><strong>$40 / month</strong></p>
+        <p><a class="btn" href="join.html">Apply</a></p>
+      </div>
+    </div>
+
+    <section>
+      <h3>Benefits</h3>
+      <ul>
+        <li>Access to courts & equipment</li>
+        <li>Free coaching clinics</li>
+        <li>Team kit (for training & matches)</li>
+      </ul>
+    </section>
+  </main>
+
+<!-- Chatbot Container -->
+<div id="chatbot">
+  <div id="chat-header" onclick="toggleChat()">
+    💬 GoGirls Chatbot
+    <span id="chat-close" onclick="toggleChat()"></span>
+  </div>
+  <div id="chat-body">
+    <div id="chat-messages"></div>
+    <div id="chat-options"></div>
+    <input type="text" id="chat-input" placeholder="Type your message..." onkeydown="if(event.key==='Enter'){sendMessage()}">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<!-- Styles -->
+<style>
+#chatbot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  font-family: Arial, sans-serif;
+  z-index: 9999;
+}
+
+#chat-header {
+  background: linear-gradient(135deg, #6a0dad, #e91e63); /* Purple to Pink */
+  color: #fff;
+  padding: 10px;
+  border-radius: 12px 12px 0 0;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+
+#chat-close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+#chat-body {
+  display: none;
+  background: #fff;
+  border: 2px solid #6a0dad;
+  border-radius: 0 0 12px 12px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+#chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+#chat-input {
+  border: 1px solid #ccc;
+  padding: 8px;
+  flex: none;
+  width: 70%;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+#chat-body button {
+  background: #e91e63;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#chat-body button:hover {
+  background: #d81b60;
+}
+
+/* Quick options styling */
+#chat-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 5px;
+}
+
+.chat-option {
+  background: #6a0dad;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.chat-option:hover {
+  background: #e91e63;
+}
+</style>
+
+<!-- Script -->
+<script>
+function toggleChat() {
+  const chatBody = document.getElementById("chat-body");
+  chatBody.style.display = chatBody.style.display === "flex" ? "none" : "flex";
+
+  // Show options when chat opens
+  if (chatBody.style.display === "flex") {
+    showOptions();
+  }
+}
+
+function sendMessage(text = null) {
+  const input = document.getElementById("chat-input");
+  const messages = document.getElementById("chat-messages");
+  const userMessage = text || input.value.trim();
+
+  if (userMessage === "") return;
+
+  // Display user message
+  const userDiv = document.createElement("div");
+  userDiv.style.textAlign = "right";
+  userDiv.innerHTML = "<b>You:</b> " + userMessage;
+  messages.appendChild(userDiv);
+
+  // Bot reply
+  const botDiv = document.createElement("div");
+  botDiv.style.textAlign = "left";
+  botDiv.innerHTML = "<b>GoGirls Bot:</b> " + getBotReply(userMessage);
+  messages.appendChild(botDiv);
+
+  // Scroll to bottom
+  messages.scrollTop = messages.scrollHeight;
+
+  input.value = "";
+}
+
+function getBotReply(message) {
+  message = message.toLowerCase();
+
+  if (message.includes("hello") || message.includes("hi"))
+    return "Hello 👋 Welcome to GoGirls Badminton!";
+
+  if (message.includes("coach"))
+    return "Coach Smriti leads our training with passion and expertise 🏸.";
+
+  if (message.includes("join") || message.includes("membership"))
+    return "You can join GoGirls Badminton by visiting the 'Join' page or contacting us directly.";
+
+  if (message.includes("training"))
+    return "Training sessions run weekly. Check our 'Programs' page.";
+
+  if (message.includes("fees") || message.includes("cost"))
+    return "Membership fees vary depending on the program. Visit our 'Membership' page.";
+
+  if (message.includes("location") || message.includes("where"))
+    return "We are based in [insert city/venue]. See 'Contact' page for details.";
+
+  if (message.includes("tournament"))
+    return "Yes! We regularly join local and national tournaments. See 'Events' page.";
+
+  if (message.includes("contact"))
+    return "You can reach us via our 'Contact' page, email, or social media.";
+
+  return "I'm here to help! Try asking about coaches, training, fees, or joining.";
+}
+
+function showOptions() {
+  const options = document.getElementById("chat-options");
+  options.innerHTML = "";
+
+  const faqOptions = [
+    "Hello",
+    "Coach",
+    "Join",
+    "Training",
+    "Fees",
+    "Location",
+    "Tournament",
+    "Contact"
+  ];
+
+  faqOptions.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.className = "chat-option";
+    btn.innerText = opt;
+    btn.onclick = () => sendMessage(opt);
+    options.appendChild(btn);
+  });
+}
+</script>
+
+  <footer class="site-footer">
+    <div class="container footer-grid"><div><h4>GoGirls Badminton</h4></div><div><h4>Join</h4><ul class="footer-links"><li><a href="join.html">Sign up</a></li></ul></div><div><h4>Contact</h4><p><a href="mailto:membership@gogirlsbadminton.edu">membership@gogirlsbadminton.edu</a></p></div></div>
+    <div>
+        <h4>Follow</h4>
+        <p class="social">
+          <a href="https://www.instagram.com/infomax_college/" aria-label="Instagram">Instagram</a> ·
+          <a href="https://www.facebook.com/infomaxcollege" aria-label="Facebook">Facebook</a>
+        </p>
+    </div>
+	<div class="copyright"><small>&copy; 2025 GoGirls Badminton</small></div>
+  </footer>
+</body>
+</html>
